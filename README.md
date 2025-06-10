@@ -1,61 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BelajarBersama Laravel Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi BelajarBersama sederhana yang terinspirasi dari StudyStream untuk virtual co-working/body doubling dengan integrasi Zoom API.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+✅ **User Authentication** (Register/Login)  
+✅ **Create Study Room** dengan auto-generate Zoom meeting  
+✅ **Join Room** yang sudah dibuat orang lain  
+✅ **Real-time Participant Counter**  
+✅ **Room Management** (view, join, leave)  
+✅ **Responsive Design**  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Quick Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Install Laravel Project
+```bash
+composer create-project laravel/laravel studyroom-app
+cd studyroom-app
+composer require guzzlehttp/guzzle
+```
 
-## Learning Laravel
+### 2. Database Setup
+```bash
+# Buat database 'studyroom_app' di MySQL
+# Copy semua migration files ke database/migrations/
+php artisan migrate
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. Environment Configuration
+Tambahkan ke `.env`:
+```env
+# Zoom API (opsional untuk testing)
+ZOOM_API_KEY=your_zoom_api_key
+ZOOM_API_SECRET=your_zoom_api_secret  
+ZOOM_JWT_TOKEN=your_zoom_jwt_token
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Database
+DB_DATABASE=studyroom_app
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. Copy All Files
+- Models → `app/Models/`
+- Controllers → `app/Http/Controllers/`
+- Services → `app/Services/`  
+- Views → `resources/views/`
+- Routes → `routes/web.php`
+- Config → `config/services.php`
 
-## Laravel Sponsors
+### 5. Run Application
+```bash
+php artisan serve
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Buka: `http://localhost:8000`
 
-### Premium Partners
+## Cara Penggunaan
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Register/Login
+- Kunjungi `/register` untuk buat akun baru
+- Atau `/login` jika sudah punya akun
 
-## Contributing
+### 2. Create Room
+- Klik "Create Your Room"
+- Isi nama room, subject (opsional), description
+- Sistem otomatis generate Zoom meeting link
+- Room langsung aktif dan bisa di-join orang lain
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Join Room
+- Di halaman utama, lihat semua room yang aktif
+- Klik "Join" untuk masuk ke Zoom meeting
+- Participant counter otomatis update
 
-## Code of Conduct
+### 4. Room Features
+- Lihat detail room dan participants
+- Copy Zoom link untuk share
+- Leave room ketika selesai
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Zoom API Setup (Opsional)
 
-## Security Vulnerabilities
+Untuk production, daftar Zoom Developer Account:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Buat akun di [Zoom Marketplace](https://marketplace.zoom.us/)
+2. Buat "JWT App" baru
+3. Copy API Key, Secret, dan JWT Token ke `.env`
 
-## License
+**Catatan**: Jika tidak setup Zoom API, sistem akan generate dummy meeting data untuk testing.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## File Structure
+
+```
+app/
+├── Http/Controllers/
+│   ├── AuthController.php          # Login/Register
+│   └── StudyRoomController.php     # Room CRUD & Join
+├── Models/
+│   ├── StudyRoom.php              # Room model
+│   └── RoomParticipant.php        # Participant tracking
+└── Services/
+    └── ZoomService.php            # Zoom API integration
+
+resources/views/
+├── layouts/app.blade.php          # Main layout
+├── auth/                          # Login/Register forms
+├── rooms/                         # Room views
+│   ├── index.blade.php           # Room list
+│   ├── create.blade.php          # Create room form
+│   └── show.blade.php            # Room details
+└── welcome.blade.php             # Landing page
+```
+
+## Database Schema
+
+### study_rooms
+- `name` - Room name
+- `subject` - Study subject (optional)
+- `zoom_meeting_id` - Zoom meeting ID
+- `zoom_join_url` - Zoom join URL
+- `participant_count` - Active participants
+- `creator_id` - Room creator
+
+### room_participants  
+- `room_id` - FK to study_rooms
+- `user_id` - FK to users
+- `joined_at` - Join timestamp
+- `left_at` - Leave timestamp (nullable)
+
+## Customization Ideas
+
+- **Timer/Pomodoro**: Tambah timer feature
+- **Categories**: Filter rooms by subject
+- **Chat**: Real-time chat dalam room
+- **Statistics**: Track study time
+- **Notifications**: Alert ketika ada room baru
+- **Google Meet**: Alternative ke Zoom
+
+## Troubleshooting
+
+**Error Zoom API**: Pastikan JWT token valid dan tidak expired  
+**Room tidak muncul**: Check `is_active = true` di database  
+**Join gagal**: Pastikan user sudah login  
+**Migration error**: Pastikan foreign key constraints benar
+
+**MVP Ready!** 🚀 
+
+Aplikasi ini sudah siap untuk testing dan development lanjutan. Core features (create room + generate Zoom + join room) sudah berfungsi dengan baik.
