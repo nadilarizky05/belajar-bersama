@@ -16,6 +16,13 @@ return new class extends Migration
             $table->timestamp('left_at')->nullable();
             $table->timestamps();
 
+            $table->string('video_preview_url')->nullable();
+            $table->boolean('host_camera_on')->default(false);
+            $table->boolean('host_mic_on')->default(false);
+            $table->boolean('study_timer_active')->default(false);
+            $table->string('study_timer_remaining')->nullable();
+            $table->string('current_activity')->nullable();
+
             $table->foreign('room_id')->references('id')->on('study_rooms');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unique(['room_id', 'user_id']);

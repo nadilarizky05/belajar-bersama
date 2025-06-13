@@ -51,24 +51,24 @@
                         class="text-white hover:text-yellow-custom transition-colors duration-200 font-medium">Explore</a>
                     <a href="#"
                         class="text-white hover:text-yellow-custom transition-colors duration-200 font-medium">Create
-                        Room</a>
+                        Room</a> --}}
                     @auth
-                    <div class="relative">
-                        <span class="text-white font-medium">{{ Auth::user()->name }}</span>
-                        <form method="POST" action="{{ route('logout') }}" class="inline ml-4">
-                            @csrf
-                            <button type="submit"
-                                class="bg-orange-custom hover:bg-orange-500 text-white px-4 py-2 rounded-lg transition-colors duration-200">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                    @else --}}
-                    <a href="{{ route('login') }}"
-                        class="bg-yellow-custom hover:bg-yellow-400 text-green-dark px-6 py-2 rounded-lg font-semibold transition-colors duration-200">
-                        Login
-                    </a>
-                    {{-- @endauth --}}
+                        <div class="relative">
+                            <span class="text-white font-medium">{{ Auth::user()->name }}</span>
+                            <form method="POST" action="{{ route('logout') }}" class="inline ml-4">
+                                @csrf
+                                <button type="submit"
+                                    class="bg-orange-custom hover:bg-orange-500 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="bg-yellow-custom hover:bg-yellow-400 text-green-dark px-6 py-2 rounded-lg font-semibold transition-colors duration-200">
+                            Login
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

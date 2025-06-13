@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('ended_at')->nullable();
+            $table->boolean('is_live')->default(false);
             $table->timestamps();
 
             $table->foreign('creator_id')->references('id')->on('users');
